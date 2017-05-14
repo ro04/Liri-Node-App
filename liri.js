@@ -34,9 +34,16 @@ function myTweets() {
                 console.log("Tweets: "  + tweets[i].text);
                 console.log("Posted: " + tweets[i].created_at);
 
-                //fs.appendFile('log.txt', logString, function(err){
-                    //if(err) throw err;
-                //});
+                //***** TweetFile to write to log.txt *****//
+                var tweetFile = "\n=======" + "\nTweets: " + tweets[i].text + 
+                                "\nPosted: " + tweets[i].created_at;
+
+                fs.appendFile('log.txt', tweetFile, function(err){
+                    if(err){
+                        console.log("Error: " + err);
+                        return;
+                    }
+                });
             };
         };
     };
@@ -61,21 +68,46 @@ function mySpotify() {
             console.log('error:', error); // Print the error if one occurred 
             return;
         }else{ 
-            console.log(data.tracks.items[0].artists[0].name);
-            console.log(data.tracks.items[0].name);
-            console.log(data.tracks.items[0].artists[0].external_urls.spotify);
-            console.log(data.tracks.items[0].album.name);
-        };
+            console.log("Artist: " + data.tracks.items[0].artists[0].name);
+            console.log("Song: " + data.tracks.items[0].name);
+            console.log("Spotify Link: " + data.tracks.items[0].artists[0].external_urls.spotify);
+            console.log("Album: " + data.tracks.items[0].album.name);
 
+            //***** spotifyFile to write to log.txt *****//
+            var spotifyFile = "\n=======" + "\nArtist: " + data.tracks.items[0].artists[0].name + 
+                                "\nSong: " + data.tracks.items[0].name + 
+                                "\nSpotify Link: " + data.tracks.items[0].artists[0].external_urls.spotify +
+                                "\nAlbum: " + data.tracks.items[0].album.name;
+
+            fs.appendFile('log.txt', spotifyFile, function(err){
+                if(err){
+                    console.log("Error: " + err);
+                    return;
+                }
+            });
+        };
     };
 
     function defaultHollaback(error, data){
         for(var i = 0; i < data.tracks.items.length; i++){
-            if(data.tracks.items[i].artists[0].name == "Ace of Base"){
+            if(data.tracks.items[i].artists[0].name == "Ace of Base"){  
                 console.log(data.tracks.items[i].artists[0].name);
                 console.log(data.tracks.items[i].name);
                 console.log(data.tracks.items[i].artists[0].external_urls.spotify);
                 console.log(data.tracks.items[i].album.name);
+
+                //***** TweetFile to write to log.txt *****//
+                var spotifyFile = "\n=======" + "\nArtist: " + data.tracks.items[0].artists[0].name + 
+                                    "\nSong: " + data.tracks.items[0].name + 
+                                    "\nSpotify Link: " + data.tracks.items[0].artists[0].external_urls.spotify +
+                                    "\nAlbum: " + data.tracks.items[0].album.name;
+
+                fs.appendFile('log.txt', spotifyFile, function(err){
+                    if(err){
+                        console.log("Error: " + err);
+                        return;
+                    }
+                });
             };
         };
     };
@@ -112,6 +144,23 @@ function myMovie() {
 			console.log("Plot: " + JSON.parse(body).Plot);
 		    console.log("Actors: " + JSON.parse(body).Actors);
 		    console.log("Rotten Tomatoes: " + JSON.parse(body).Ratings[1].Value);
+
+            //***** TweetFile to write to log.txt *****//
+            var movieFile = "\n=======" + "\nTitle: " + JSON.parse(body).Title + 
+                            "\nRelease Year: " + JSON.parse(body).Year + 
+                            "\nIMBD Rating: " + JSON.parse(body).imdbRating+
+                            "\nCountry: " + JSON.parse(body).Country +
+                            "\nLanguage: " + JSON.parse(body).Language +
+                            "\nPlot: " + JSON.parse(body).Plot +
+                            "\nActors: " + JSON.parse(body).Actors +
+                            "\nRotten Tomatoes: " + JSON.parse(body).Ratings[1].Value;
+
+            fs.appendFile('log.txt', movieFile, function(err){
+                if(err){
+                    console.log("Error: " + err);
+                    return;
+                }
+            });
         };
     });
 };//end myMovie()
